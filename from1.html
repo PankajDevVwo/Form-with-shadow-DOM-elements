@@ -16,7 +16,7 @@
     <!-- End VWO Async SmartCode -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shadow DOM Form</title>
+    <title>Normal and Shadow DOM Forms</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,7 +27,7 @@
             padding: 20px;
             border-radius: 5px;
             max-width: 400px;
-            margin: 0 auto;
+            margin: 20px auto;
         }
         .form-container h2 {
             margin-bottom: 20px;
@@ -56,30 +56,23 @@
         button:hover {
             background-color: #0056b3;
         }
-        /* Styles for the shadow DOM elements */
-        .shadow-form-container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-            max-width: 400px;
-            margin: 20px auto;
-            background-color: #f9f9f9;
-        }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h2>Non-Shadow DOM Form</h2>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name">
-        
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email">
-        
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
-        
-        <button type="submit">Submit</button>
+        <h2>Normal Form</h2>
+        <form id='normal'>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name">
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+            
+            <button type="submit">Submit</button>
+        </form>
     </div>
 
     <div id="shadow-host"></div>
@@ -88,27 +81,36 @@
         const shadowHost = document.getElementById('shadow-host');
         const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
 
-        const shadowForm = document.createElement('div');
-        shadowForm.classList.add('shadow-form-container');
+        const shadowFormContainer = document.createElement('div');
+        shadowFormContainer.classList.add('form-container');
 
-        shadowForm.innerHTML = `
+        shadowFormContainer.innerHTML = `
             <h2>Shadow DOM Form</h2>
-            <label for="shadow-name">Name</label>
-            <input type="text" id="shadow-name" name="shadow-name">
-            
-            <label for="shadow-email">Email</label>
-            <input type="email" id="shadow-email" name="shadow-email">
-            
-            <label for="shadow-password">Password</label>
-            <input type="password" id="shadow-password" name="shadow-password">
-            
-            <button type="submit">Submit</button>
+            <form id='shadow-form'>
+                <label for="shadow-name">Name</label>
+                <input type="text" id="shadow-name" name="shadow-name">
+                
+                <label for="shadow-email">Email</label>
+                <input type="email" id="shadow-email" name="shadow-email">
+                
+                <label for="shadow-password">Password</label>
+                <input type="password" id="shadow-password" name="shadow-password">
+                
+                <button type="submit">Submit</button>
+            </form>
         `;
 
         // Append the styles to the shadow root
         const style = document.createElement('style');
         style.textContent = `
-            h2 {
+            .form-container {
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 5px;
+                max-width: 400px;
+                margin: 20px auto;
+            }
+            .form-container h2 {
                 margin-bottom: 20px;
                 text-align: center;
             }
@@ -126,18 +128,19 @@
             button {
                 width: 100%;
                 padding: 10px;
-                background-color: #28a745;
+                background-color: #007BFF;
                 border: none;
                 color: white;
                 border-radius: 3px;
                 cursor: pointer;
             }
             button:hover {
-                background-color: #218838;
+                background-color: #0056b3;
             }
         `;
         shadowRoot.appendChild(style);
-        shadowRoot.appendChild(shadowForm);
+        shadowRoot.appendChild(shadowFormContainer);
     </script>
 </body>
 </html>
+
