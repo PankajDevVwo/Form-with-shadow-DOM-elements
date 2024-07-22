@@ -78,8 +78,9 @@
                 const form = document.createElement('form');
                 form.setAttribute('action', '/submit');
                 form.setAttribute('method', 'post');
+                form.setAttribute('id', 'contact-form');
                 form.innerHTML = `
-                    <form id = 'contact-form'>
+                    <form>
                         <h1>Contact Form</h1>
                         <div>
                             <field-name></field-name>
