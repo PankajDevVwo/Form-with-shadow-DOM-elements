@@ -17,9 +17,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Form with Shadow DOM</title>
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 1em;
+        }
+        div + div {
+            margin-top: 1em;
+        }
+        button {
+            padding: 0.7em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 0.3em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <contact-form></contact-form>
+    <form action="/submit" method="post" id="contact-form">
+        <h1>Contact Form</h1>
+        <div>
+            <field-name></field-name>
+        </div>
+        <div>
+            <field-email></field-email>
+        </div>
+        <div>
+            <field-phone></field-phone>
+        </div>
+        <div>
+            <field-subject></field-subject>
+        </div>
+        <div>
+            <field-message></field-message>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
 
     <script>
         class FormField extends HTMLElement {
@@ -45,87 +88,30 @@
             }
         }
 
-        class ContactForm extends HTMLElement {
-            constructor() {
-                super();
-                const shadow = this.attachShadow({ mode: 'open' });
-                const style = document.createElement('style');
-                style.textContent = `
-                    form {
-                        max-width: 600px;
-                        margin: 0 auto;
-                        padding: 1em;
-                        border: 1px solid #ccc;
-                        border-radius: 1em;
-                    }
-                    div + div {
-                        margin-top: 1em;
-                    }
-                    button {
-                        padding: 0.7em;
-                        color: #fff;
-                        background-color: #007BFF;
-                        border: none;
-                        border-radius: 0.3em;
-                        cursor: pointer;
-                    }
-                    button:hover {
-                        background-color: #0056b3;
-                    }
-                `;
-                shadow.appendChild(style);
-
-                const form = document.createElement('form');
-                form.setAttribute('action', '/submit');
-                form.setAttribute('method', 'post');
-                form.setAttribute('id', 'contact-form');
-                form.innerHTML = `
-                    <h1>Contact Form</h1>
-                    <div>
-                        <field-name></field-name>
-                    </div>
-                    <div>
-                        <field-email></field-email>
-                    </div>
-                    <div>
-                        <field-phone></field-phone>
-                    </div>
-                    <div>
-                        <field-subject></field-subject>
-                    </div>
-                    <div>
-                        <field-message></field-message>
-                    </div>
-                    <div>
-                        <button type="submit">Submit</button>
-                    </div>
-                `;
-
-                shadow.appendChild(form);
-            }
-        }
-
-        customElements.define('contact-form', ContactForm);
         customElements.define('field-name', class extends FormField {
             constructor() {
                 super('<label for="user-name">Name:</label><input type="text" id="user-name" name="user-name" required>');
             }
         });
+
         customElements.define('field-email', class extends FormField {
             constructor() {
                 super('<label for="user-email">Email:</label><input type="email" id="user-email" name="user-email" required>');
             }
         });
+
         customElements.define('field-phone', class extends FormField {
             constructor() {
                 super('<label for="user-phone">Phone:</label><input type="tel" id="user-phone" name="user-phone">');
             }
         });
+
         customElements.define('field-subject', class extends FormField {
             constructor() {
                 super('<label for="user-subject">Subject:</label><input type="text" id="user-subject" name="user-subject" required>');
             }
         });
+
         customElements.define('field-message', class extends FormField {
             constructor() {
                 super('<label for="user-message">Message:</label><textarea id="user-message" name="user-message" rows="4" required></textarea>');
